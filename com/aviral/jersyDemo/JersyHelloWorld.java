@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.jms.JMSException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +25,14 @@ import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/helloWorld")
 public class JersyHelloWorld {
+	
+	public JersyHelloWorld() throws JMSException {
+		ActiveMQConnectionFactory q = new ActiveMQConnectionFactory("vm://mybroker?broker.useJmx=false");
+		ActiveMQConnectionFactory q1 = new ActiveMQConnectionFactory("vm://yourbroker");
+		System.out.println(q.createConnection());
+		System.out.println(q1.createQueueConnection());
+		
+	}
 	@GET
 	@Produces("application/json")
 	public Response getMessage() throws JSONException {
